@@ -40,10 +40,16 @@ int inizializzaGriglia(char vet[], int dim)
 void stampaGriglia(char vet[], int righe, int colonne)
 {
     int i, j, posizione=0;
+    char letteraColonna='A';
+    cout << "  ";
+    for(i=0;i<colonne;i++)
+        cout << letteraColonna++ << "|";
+    cout << endl;
     for(i=0; i<righe; i++)
     {
         for(j=0; j<colonne; j++)
         {
+            if(j==0) cout << i+1 << "|";
             cout << vet[posizione] << "|";
             posizione++;
         }
@@ -55,24 +61,14 @@ int generaNavi(char vet[], int dim, int nNavi)
 {
     srand(time(NULL));
     int i, j, r;
-    int posizioniNavi[nNavi];
     for(i=0; i<nNavi; i++)
     {
-        j=0;
         r = rand()%dim;
-        //fichè ci sono elementi e non trovo doppioni vado avanti
-        while(j<i && r!=posizioniNavi[j])
-            j++;
-        //ho scansionato tutto il vettore oppure ho trovato un doppione
-        if (r!=posizioniNavi[j])
-        {
-            //nessun doppione
-            posizioniNavi[j]=r;
-            vet[r]='N';
-        }
-        else
-            //doppione trovato rigenera un nuovo numero random
+        if (vet[r]=='N')
             i--;
+        else
+            vet[r]='N';
     }
     return 1;
 }
+
