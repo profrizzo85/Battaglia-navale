@@ -42,8 +42,6 @@ int main()
     //stampaGriglia(griglia, nRighe, nColonne);
 }
 
-
-
 int inizializzaGriglia(char vet[], int dim)
 {
     int i;
