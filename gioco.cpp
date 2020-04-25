@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <cmath>
 #include <ctime>
 using namespace std;
 
@@ -22,7 +23,7 @@ int main()
     dimensione = nRighe*nColonne;
     inizializzaGriglia(griglia, dimensione);
     stampaGriglia(griglia, nRighe, nColonne);
-    cout << "Inserisci il numero di navi da generare ";
+    cout << "Inserisci il numero di navi da generare";
     cin >> numeroNavi;
     generaNavi(griglia, dimensione, numeroNavi);
     stampaGriglia(griglia, nRighe, nColonne);
@@ -53,11 +54,25 @@ void stampaGriglia(char vet[], int righe, int colonne)
 int generaNavi(char vet[], int dim, int nNavi)
 {
     srand(time(NULL));
-    int i, r;
+    int i, j, r;
+    int posizioniNavi[nNavi];
     for(i=0; i<nNavi; i++)
     {
+        j=0;
         r = rand()%dim;
-        vet[r]='N';
+        //fichè ci sono elementi e non trovo doppioni vado avanti
+        while(j<i && r!=posizioniNavi[j])
+            j++;
+        //ho scansionato tutto il vettore oppure ho trovato un doppione
+        if (r!=posizioniNavi[j])
+        {
+            //nessun doppione
+            posizioniNavi[j]=r;
+            vet[r]='N';
+        }
+        else
+            //doppione trovato rigenera un nuovo numero random
+            i--;
     }
     return 1;
 }
