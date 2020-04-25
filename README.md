@@ -4,3 +4,4 @@ Versione iniziale della Battaglia Navale. Le funzioni implementate in questa ver
 int inizializzaGriglia(char[], int);
 void stampaGriglia(char[], int, int);
 int generaNavi(char[], int int);
+In questa versione, le funzione generaNavi() si accerterà di non generare due volte lo stesso valore (cioè di non creare due navi nella stessa posizione).
