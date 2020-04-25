@@ -9,12 +9,17 @@ char stampaGriglia(char vet[], int righe, int colonne);
 int generaNavi(char vet[], int dim, int nNavi);
 int convertiColonnaInNumero(char colonna);
 int calcolaCella(int riga, int colonna, int fineColonna);
+int controllaCella(char vet[], char vetUtente[], int posizioneArray);
+int incrementaPunti(int puntiUtente, int valoreIncremento);
+
 int main()
 {
     const int DIM_MAX = 100;
     int nColonne, nRighe, dimensione, numeroNavi, rigaScelta;
     int colonnaConvertita, ultimaColonnaConvertita, posizioneScelta;
-    char griglia[DIM_MAX], colonnaScelta, ultimaColonna;
+    int esito, punti=0;
+    char griglia[DIM_MAX], grigliaUtente[DIM_MAX], colonnaScelta, ultimaColonna;
+    char continuare;
     do
     {
         cout << "Inserisci il numero di righe ";
@@ -24,6 +29,7 @@ int main()
     }while(nRighe>10 || nColonne>10);
     dimensione = nRighe*nColonne;
     inizializzaGriglia(griglia, dimensione);
+    inizializzaGriglia(grigliaUtente, dimensione);
     ultimaColonna = stampaGriglia(griglia, nRighe, nColonne);
     cout << "Inserisci il numero di navi da generare";
     cin >> numeroNavi;
@@ -40,6 +46,20 @@ int main()
     //calcolo la posizione della cella (corrisponde alla posizione dell'array)
     posizioneScelta = calcolaCella(rigaScelta, colonnaConvertita, ultimaColonnaConvertita);
     //stampaGriglia(griglia, nRighe, nColonne);
+    esito = controllaCella(griglia, grigliaUtente, posizioneScelta);
+    //stampa la griglia aggiornata dell'utente
+    stampaGriglia(grigliaUtente, nRighe, nColonne);
+    //calcola il punteggio
+    if (esito==1)
+        punti = incrementaPunti(punti, 1);
+    cout << "Il punteggio del Giocatore e' " << punti << endl;
+    do{
+        cout << "Sei pronto per il prossimo turno? (s per continuare, qualsiasi tasto per aspettare)";
+        cin >> continuare;
+    }while(continuare!='s');
+    system("cls");
+    //stampa la griglia aggiornata dell'utente
+    stampaGriglia(grigliaUtente, nRighe, nColonne);
 }
 
 
@@ -102,4 +122,25 @@ int calcolaCella(int riga, int colonna, int fineColonna){
     int posizione;
     posizione = (colonna + (riga -1) * fineColonna)-1;
     return posizione;
+}
+int controllaCella(char vet[], char vetUtente[], int posizioneArray)
+{
+    if (vet[posizioneArray]=='N')
+    {
+        cout << "Hai colpito una nave!" << endl;
+        vet[posizioneArray]='X';
+        vetUtente[posizioneArray]='X';
+        return 1;
+    }
+    else
+    {
+        cout << "Il tuo colpo è andato a vuoto!" << endl;
+        vet[posizioneArray]='A';
+        vetUtente[posizioneArray]='A';
+        return 0;
+    }
+}
+int incrementaPunti(int puntiUtente, int valoreIncremento)
+{
+    return puntiUtente + valoreIncremento;
 }
